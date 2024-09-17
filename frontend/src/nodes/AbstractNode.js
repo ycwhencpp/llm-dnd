@@ -27,15 +27,11 @@ const nodeStyles = {
 };
 
 export const AbstractNode = ({ id, data, type, inputs, outputs, children }) => {
-  console.log(outputs);
   const updateNodeField = useStore((state) => state.updateNodeField);
 
   const handleInputChange = (field, value) => {
     updateNodeField(id, field, value);
   };
-
-  // Ensure id is a string and replace any characters that might cause issues in selectors
-  const safeId = id.toString().replace(/[^a-zA-Z0-9-_]/g, "_");
 
   return (
     <div style={{ ...nodeStyles.node, ...data.style }}>
@@ -46,7 +42,7 @@ export const AbstractNode = ({ id, data, type, inputs, outputs, children }) => {
             key={`input-${index}`}
             type="target"
             position={Position.Left}
-            id={`${safeId}-${input}-target`}
+            id={`${id}-${input}-target`}
             style={{ top: `${((index + 1) * 100) / (inputs.length + 1)}%` }}
           />
         ))}
@@ -57,7 +53,7 @@ export const AbstractNode = ({ id, data, type, inputs, outputs, children }) => {
             key={`output-${index}`}
             type="source"
             position={Position.Right}
-            id={`${safeId}-${output}-source`}
+            id={`${id}-${output}-source`}
             style={{ top: `${((index + 1) * 100) / (outputs.length + 1)}%` }}
           />
         ))}

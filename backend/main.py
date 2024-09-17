@@ -35,12 +35,11 @@ def parse_pipeline(pipeline: Pipeline):
     num_nodes = len(pipeline.nodes)
     num_edges = len(pipeline.edges)
 
-    G = nx.Graph()
+    G = nx.DiGraph()
     for node in pipeline.nodes:
         G.add_node(node.id)
     for edge in pipeline.edges:
         G.add_edge(edge.source, edge.target)
-
 
     is_dag = num_nodes > 0 and nx.is_directed_acyclic_graph(G)
 

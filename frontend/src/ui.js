@@ -41,8 +41,9 @@ export const PipelineUI = () => {
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       const type = event.dataTransfer.getData("application/reactflow");
+      const parsedType = JSON.parse(type);
 
-      if (typeof type === "undefined" || !type) {
+      if (typeof parsedType.nodeType === "undefined" || !parsedType.nodeType) {
         return;
       }
 
@@ -51,12 +52,12 @@ export const PipelineUI = () => {
         y: event.clientY - reactFlowBounds.top,
       };
 
-      const nodeID = getNodeID(type);
+      const nodeID = getNodeID();
       const newNode = {
-        id: nodeID.toString(), // Ensure ID is a string
-        type,
+        id: nodeID,
+        type: parsedType.nodeType,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${parsedType.nodeType} node` },
       };
 
       addNode(newNode);
