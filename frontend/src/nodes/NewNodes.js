@@ -1,6 +1,6 @@
 import React from "react";
 import { AbstractNode } from "./AbstractNode";
-
+import DynamicInput from "../DynamicInput";
 export const MathNode = ({ id, data }) => {
   return (
     <AbstractNode id={id} data={data} type="Math" inputs={["a", "b"]} outputs={["result"]}>
@@ -23,11 +23,11 @@ export const FilterNode = ({ id, data }) => {
   return (
     <AbstractNode id={id} data={data} type="Filter" inputs={["input"]} outputs={["output"]}>
       {({ styles, handleInputChange }) => (
-        <input
-          style={styles.input}
-          placeholder="Enter filter condition"
-          value={data.condition || ""}
-          onChange={(e) => handleInputChange("condition", e.target.value)}
+        <DynamicInput
+          data={data}
+          handleInputChange={handleInputChange}
+          placeholder={"Enter Filter Conditions"}
+          styles={styles}
         />
       )}
     </AbstractNode>
@@ -71,11 +71,12 @@ export const DataTransformNode = ({ id, data }) => {
   return (
     <AbstractNode id={id} data={data} type="Data Transform" inputs={["input"]} outputs={["output"]}>
       {({ styles, handleInputChange }) => (
-        <textarea
-          style={{ ...styles.input, height: "100px" }}
+        <DynamicInput
+          data={data}
+          handleInputChange={handleInputChange}
           placeholder="Enter transformation function (JavaScript)"
-          value={data.transform || ""}
-          onChange={(e) => handleInputChange("transform", e.target.value)}
+          styles={styles}
+          fieldKey={"transform"}
         />
       )}
     </AbstractNode>
